@@ -3,7 +3,7 @@ const profileReducer=(state=null,action)=>{
     case 'UPDATE':
       return action.data;
     default:
-      return null;
+      return state;
   }
 }
 

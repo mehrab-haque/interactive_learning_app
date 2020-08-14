@@ -5,7 +5,7 @@ const cookies = new Cookies();
 
 export const fetchProfile=(dispatcher)=>{
   axios.get(base_url+'auth/profile',{headers:{authorization:cookies.get('token')}}).then(res=>{
-    console.log(res.data)
+    dispatcher(profileDispatch(res.data))
   }).catch(err=>{
     console.log(err)
   })
