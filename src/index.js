@@ -3,10 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {createStore} from 'redux'
+import allReducers from './reducer'
+import {Provider} from 'react-redux'
+import {loginRedux,checkAuth} from './action/auth'
+import {useSelector,useDispatch} from 'react-redux'
+
+export const base_url='https://0jymup9y4j.execute-api.ap-south-1.amazonaws.com/d/'
+
+const store=createStore(allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
