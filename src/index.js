@@ -9,7 +9,7 @@ import {Provider} from 'react-redux'
 import {loginRedux,checkAuth} from './action/auth'
 import {useSelector,useDispatch} from 'react-redux'
 
-export const base_url='http://buetedu1backend-env.eba-fjufei33.ap-south-1.elasticbeanstalk.com/'
+export const base_url='https://0jymup9y4j.execute-api.ap-south-1.amazonaws.com/d/'
 
 
 
