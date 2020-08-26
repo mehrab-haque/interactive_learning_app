@@ -22,6 +22,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {checkAuth,googleAuth,login,register} from './action/auth'
 import {useSelector,useDispatch} from 'react-redux'
 import Home from './component/Home'
+import uuid from 'react-uuid'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -128,7 +129,6 @@ function App() {
   else
     return(
       <div>
-
         <Snackbar
           anchorOrigin={{
             vertical: 'top',
@@ -152,15 +152,15 @@ function App() {
                 dialogState==1?(<div>Register</div>):(<div>Login</div>)
               }
             </DialogTitle>
-            <DialogContent>
+            <DialogContent >
             {
               dialogState==1?(
-                <div><TextField
+                <div ><TextField
+
                   inputRef={nameRef}
                   style={{marginTop:'8px'}}
 
                   margin="dense"
-                  id="name"
                   label="Name"
                   variant="outlined"
                   InputProps={{
@@ -179,10 +179,10 @@ function App() {
               )
             }
               <TextField
+
                 inputRef={phoneRef}
                 style={{marginTop:'8px'}}
                 margin="dense"
-                id="name"
                 label="Phone"
                 type="tel"
                 variant="outlined"
@@ -199,10 +199,10 @@ function App() {
               /><br/>
 
               <TextField
+
                 inputRef={passRef}
                 style={{marginTop:'8px'}}
                 margin="dense"
-                id="name"
                 label="Password"
                 type="password"
                 variant="outlined"
@@ -221,10 +221,10 @@ function App() {
               {
                 dialogState==1?(
                   <TextField
+
                     inputRef={repassRef}
                     style={{marginTop:'8px'}}
                     margin="dense"
-                    id="name"
                     label="Retype Password"
                     type="password"
                     variant="outlined"
@@ -249,21 +249,21 @@ function App() {
               {
                 dialogState==1?(
                   <div>
-                  <center><Button  style={{marginTop:'8px'}} variant="outlined" color="primary" onClick={registerClick}>
+                  <center><Button   style={{marginTop:'8px'}} variant="outlined" color="primary" onClick={registerClick}>
                     Register
                   </Button></center>
                     <center style={{marginTop:'8px'}}>or Already Have An Account ?</center>
-                    <center><Button onClick={()=>{setDialogState(2)}} style={{marginTop:'8px',marginBottom:'8px'}} variant="outlined" color="secondary" >
+                    <center><Button  onClick={()=>{setDialogState(2)}} style={{marginTop:'8px',marginBottom:'8px'}} variant="outlined" color="secondary" >
                       Login to existing account
                     </Button></center>
                   </div>
                 ):(
                   <div>
-                  <center><Button  style={{marginTop:'8px'}} variant="outlined" color="primary" onClick={loginClick} >
+                  <center><Button   style={{marginTop:'8px'}} variant="outlined" color="primary" onClick={loginClick} >
                     Login
                   </Button></center>
                     <center style={{marginTop:'8px'}}>or Need An Account ?</center>
-                    <center><Button onClick={()=>{setDialogState(1)}} style={{marginTop:'8px',marginBottom:'8px'}} variant="outlined" color="secondary" >
+                    <center><Button  onClick={()=>{setDialogState(1)}} style={{marginTop:'8px',marginBottom:'8px'}} variant="outlined" color="secondary" >
                       Create A New Account
                     </Button></center>
                   </div>
@@ -273,6 +273,7 @@ function App() {
                 <Divider style={{marginBottom:'5px',marginTop:'5px'}}/>
 
                 <center><GoogleLogin
+
                   clientId="384400786106-ep0igg2mrvq1f3vkvavpdlt7pkcp3d34.apps.googleusercontent.com"
                   buttonText="Sign in using google"
                   onSuccess={google}
