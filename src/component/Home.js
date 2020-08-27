@@ -4,6 +4,8 @@ import {fetchProfile} from '../action/profile'
 import {useSelector,useDispatch} from 'react-redux'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { BrowserRouter, Route, Switch,Link } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Circle } from 'rc-progress';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +19,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import './Home.css'
+import Topics from './Topics'
 
 const drawerWidth = 240;
 
@@ -208,6 +212,25 @@ const Home=props=>{
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {
+          profile!=null?(
+            <Grid container spacing={1}>
+
+              <BrowserRouter>
+                <Switch>
+                  <Route path="/" exact component={Topics}/>
+                </Switch>
+                 <Grid item xs={12} md={4}>
+                   Recommendation Part
+                 </Grid>
+                 </BrowserRouter>
+
+
+            </Grid>
+          ):(
+            <div/>
+          )
+        }
       </main>
     </div>
   )
