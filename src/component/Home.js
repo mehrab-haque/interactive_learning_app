@@ -21,6 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import './Home.css'
 import Topics from './Topics'
+import Serieses from './Serieses'
 
 const drawerWidth = 240;
 
@@ -219,6 +220,7 @@ const Home=props=>{
               <BrowserRouter>
                 <Switch>
                   <Route path="/" exact component={Topics}/>
+                  <Route path="/topic/:id" exact component={Serieses}/>}/>
                 </Switch>
                  <Grid item xs={12} md={4}>
                    Recommendation Part

@@ -1,12 +1,13 @@
 import loggedReducer from './loggedReducer'
 import profileReducer from './profileReducer'
-import {topicsReducer} from './contentReducer'
+import {topicsReducer,seriesesReducer} from './contentReducer'
 import {combineReducers} from 'redux'
 
 const allReducers=combineReducers({
   isLogged:loggedReducer,
   profile:profileReducer,
-  topics:topicsReducer
+  topics:topicsReducer,
+  serieses:seriesesReducer
 })
 
 export default allReducers

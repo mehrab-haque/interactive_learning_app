@@ -17,3 +17,25 @@ const topicsDispatch=data=>{
     data:data
   }
 }
+
+export const fetchSerieses=(dispatcher,topicID)=>{
+  dispatcher(clearSeriesesDispatch())
+  axios.get(base_url+'topic/'+topicID,{headers:{authorization:cookies.get('token')}}).then(res=>{
+    dispatcher(seriesesDispatch(res.data))
+  }).catch(err=>{
+    console.log(err)
+  })
+}
+
+const seriesesDispatch=data=>{
+  return{
+    type:'UPDATE_SERIESES',
+    data:data
+  }
+}
+
+const clearSeriesesDispatch=()=>{
+  return{
+    type:'CLEAR_SERIESES'
+  }
+}

@@ -6,3 +6,14 @@ export const topicsReducer=(state=null,action)=>{
       return state;
   }
 }
+
+export const seriesesReducer=(state=null,action)=>{
+  switch(action.type){
+    case 'UPDATE_SERIESES':
+      return action.data;
+    case 'CLEAR_SERIESES':
+      return null;
+    default:
+      return state;
+  }
+}
