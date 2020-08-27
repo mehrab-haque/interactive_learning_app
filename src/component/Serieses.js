@@ -136,23 +136,24 @@ const Serieses=props=>{
                                 {series.nproblem} Problems<br/>
 
                               </Typography>
-                              <ProgressBar
+                              <div style={{marginTop:'10px'}}><ProgressBar
+
                                 height="20px"
                                 rect
-                                fontColor="lime"
+                                fontColor="#0090ff"
                                 percentage="40"
                                 rectPadding="0px"
-                                fontSize="1.2em"
+                                fontSize="0em"
                                 trackPathColor="#D5D5D5"
                                 bgColor="transparent"
                                 trackBorderColor="transparent"
                                 defColor={{
-                                  fair: 'lime',
-                                  good: 'lime',
-                                  excellent: 'lime',
-                                  poor: 'lime',
+                                  fair: '#0090ff',
+                                  good: '#0090ff',
+                                  excellent: '#0090ff',
+                                  poor: '#0090ff',
                                 }}
-                              />
+                              /></div>
 
                             </CardContent>
                           </CardActionArea>
