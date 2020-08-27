@@ -14,8 +14,8 @@ export const base_url='https://0jymup9y4j.execute-api.ap-south-1.amazonaws.com/d
 
 
 //redux
-const store=createStore(allReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store=createStore(allReducers/*,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()*/)
 
 ReactDOM.render(
   <React.StrictMode>

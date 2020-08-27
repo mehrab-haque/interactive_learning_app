@@ -8,7 +8,8 @@ import {useSelector,useDispatch} from 'react-redux'
 import Grid from '@material-ui/core/Grid';
 import { BrowserRouter, Route, Switch,Link } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Circle } from 'rc-progress';
+import { Circle,Line } from 'rc-progress';
+import ProgressBar from 'react-animated-progress-bar';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -135,8 +136,23 @@ const Serieses=props=>{
                                 {series.nproblem} Problems<br/>
 
                               </Typography>
-                              <center><Circle style={{width:'50%',marginTop:'10px'}}    strokeWidth="20" trailWidth='20' strokeLinecap='square' strokeColor="#0090ff" trailColor="#D5D5D5" /></center>
-
+                              <ProgressBar
+                                height="20px"
+                                rect
+                                fontColor="lime"
+                                percentage="40"
+                                rectPadding="0px"
+                                fontSize="1.2em"
+                                trackPathColor="#D5D5D5"
+                                bgColor="transparent"
+                                trackBorderColor="transparent"
+                                defColor={{
+                                  fair: 'lime',
+                                  good: 'lime',
+                                  excellent: 'lime',
+                                  poor: 'lime',
+                                }}
+                              />
 
                             </CardContent>
                           </CardActionArea>
