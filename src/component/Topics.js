@@ -17,6 +17,9 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import Toolbar from '@material-ui/core/Toolbar';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
@@ -71,13 +74,28 @@ const useStyles = makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
-  }
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
 }));
 
 const Topics=props=>{
 
   const topics=useSelector(state=>state.topics)
   const dispatch=useDispatch()
+
+  const [expanded, setExpanded] = useState(0);
+  const handleExpandClick = pos => {
+    setExpanded(pos);
+  };
 
   const classes = useStyles();
   useEffect(() => {
@@ -123,6 +141,25 @@ const Topics=props=>{
                                 {topic.nproblem} Problems<br/>
                               </Typography>
                             </CardContent>
+                            <CardActions disableSpacing>
+                              <IconButton
+                                className={clsx(classes.expand, {
+                                  [classes.expandOpen]: expanded==ind+1,
+                                })}
+                                onClick={(e) => {e.preventDefault(); if(expanded==0)setExpanded(ind+1); else setExpanded(0);}}
+                                aria-expanded={expanded==ind+1}
+                                aria-label="show more"
+                                >
+                                <ExpandMoreIcon />
+                              </IconButton>
+                            </CardActions>
+                            <Collapse in={expanded==ind+1} timeout="auto" unmountOnExit>
+                              <CardContent>
+                                <Typography variant='body2'>
+                                  {topic.description}
+                                </Typography>
+                              </CardContent>
+                            </Collapse>
                           </CardActionArea>
                         </Card>
                       </Link>

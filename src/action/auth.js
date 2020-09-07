@@ -3,6 +3,8 @@ import Cookies from 'universal-cookie';
 import {base_url} from '../'
 const cookies = new Cookies();
 
+const COOKIE_AGE=31536000
+
 export const checkAuth=(dispatcher)=>{
   if(cookies.get('token')==undefined || cookies.get('token')==null)
     dispatcher(logoutDispatch())
@@ -21,7 +23,7 @@ export const logoutRedux=(dispatcher)=>{
 export const googleAuth=(data,dispatcher)=>{
   dispatcher(loadingDispatch())
   axios.post(base_url+'auth/googleoauth',data).then(res=>{
-    cookies.set('token',res.data.token)
+    cookies.set('token',res.data.token,{ path: '/', maxAge: COOKIE_AGE })
     checkAuth(dispatcher)
   }).catch(err=>{
     console.log(err)
@@ -36,7 +38,7 @@ export const register=(data,dispatcher,callBack)=>{
       console.log(res.data.token)
 
       console.log(cookies.get('token'))
-      cookies.set('token',res.data.token)
+      cookies.set('token',res.data.token,{ path: '/', maxAge: COOKIE_AGE })
 
       checkAuth(dispatcher)
     }else{
@@ -53,7 +55,7 @@ export const login=(data,dispatcher,callBack)=>{
   dispatcher(loadingDispatch())
   axios.post(base_url+'auth/login',data).then(res=>{
     if(!('error' in res.data)){
-      cookies.set('token',res.data.token)
+      cookies.set('token',res.data.token,{ path: '/', maxAge: COOKIE_AGE })
       checkAuth(dispatcher)
     }else{
       callBack(res.data.error)
