@@ -17,3 +17,14 @@ export const seriesesReducer=(state=null,action)=>{
       return state;
   }
 }
+
+export const problemReducer=(state=null,action)=>{
+  switch(action.type){
+    case 'UPDATE_PROBLEM':
+      return action.data;
+    case 'CLEAR_PROBLEM':
+      return null;
+    default:
+      return state;
+  }
+}

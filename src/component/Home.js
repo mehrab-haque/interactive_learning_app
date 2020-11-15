@@ -5,7 +5,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { BrowserRouter, Route, Switch,Link } from 'react-router-dom';
+import {Route, Switch,Link } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Circle } from 'rc-progress';
 import Typography from '@material-ui/core/Typography';
@@ -22,6 +22,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import './Home.css'
 import Topics from './Topics'
 import Serieses from './Serieses'
+import Problem from './Problem'
 
 const drawerWidth = 240;
 
@@ -216,18 +217,14 @@ const Home=props=>{
         {
           profile!=null?(
             <Grid container spacing={1}>
-
-              <BrowserRouter>
                 <Switch>
                   <Route path="/" exact component={Topics}/>
-                  <Route path="/topic/:id" exact component={Serieses}/>}/>
+                  <Route path="/topic/:id" component={Serieses}/>}/>
+                  <Route path="/problem/:id"component={Problem}/>}/>
                 </Switch>
                  <Grid item xs={12} md={4}>
                    Recommendation Part
                  </Grid>
-                 </BrowserRouter>
-
-
             </Grid>
           ):(
             <div/>

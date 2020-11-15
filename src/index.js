@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {createStore} from 'redux'
 import allReducers from './reducer'
 import {Provider} from 'react-redux'
+import {BrowserRouter} from 'react-router-dom'
 import {loginRedux,checkAuth} from './action/auth'
 import {useSelector,useDispatch} from 'react-redux'
 
@@ -20,7 +21,9 @@ const store=createStore(allReducers,
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

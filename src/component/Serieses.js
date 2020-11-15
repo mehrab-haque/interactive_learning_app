@@ -4,7 +4,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import {useSelector,useDispatch} from 'react-redux'
 import Grid from '@material-ui/core/Grid';
 import { BrowserRouter, Route, Switch,Link } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -23,8 +22,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {useSelector,useDispatch} from 'react-redux'
 import {fetchSerieses} from '../action/content'
-import {fetchProfile} from '../action/profile'
 import uuid from 'react-uuid'
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +78,6 @@ const useStyles = makeStyles((theme) => ({
 const Serieses=props=>{
   const topicID=props.match.params.id
   const classes = useStyles();
-  const profile=useSelector(state=>state.profile)
   const serieses=useSelector(state=>state.serieses)
   const dispatch=useDispatch()
 

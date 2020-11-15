@@ -39,3 +39,25 @@ const clearSeriesesDispatch=()=>{
     type:'CLEAR_SERIESES'
   }
 }
+
+export const fetchProblem=(dispatcher,problem_id)=>{
+  dispatcher(clearProblemDispatch())
+  axios.get(base_url+'problem/'+problem_id,{headers:{authorization:cookies.get('token')}}).then(res=>{
+    dispatcher(problemDispatch(res.data[0]))
+  }).catch(err=>{
+    console.log(err)
+  })
+}
+
+const problemDispatch=data=>{
+  return{
+    type:'UPDATE_PROBLEM',
+    data:data
+  }
+}
+
+const clearProblemDispatch=()=>{
+  return{
+    type:'CLEAR_PROBLEM'
+  }
+}

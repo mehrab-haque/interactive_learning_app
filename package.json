@@ -10,18 +10,21 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "d3": "^6.1.1",
     "rc-progress": "^3.0.0",
     "react": "^16.13.1",
     "react-animated-progress-bar": "^1.0.4",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.21",
     "react-loader-spinner": "^3.1.14",
+    "react-md-editor": "^0.2.2",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-uuid": "^1.0.2",
     "redux": "^4.0.5",
-    "universal-cookie": "^4.0.3"
+    "universal-cookie": "^4.0.3",
+    "venn.js": "^0.2.20"
   },
   "scripts": {
     "start": "react-scripts start",
