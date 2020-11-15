@@ -222,9 +222,9 @@ const Home=props=>{
                   <Route path="/topic/:id" component={Serieses}/>}/>
                   <Route path="/problem/:id"component={Problem}/>}/>
                 </Switch>
-                 <Grid item xs={12} md={4}>
+                 /*<Grid item xs={12} md={4}>
                    Recommendation Part
-                 </Grid>
+                 </Grid>*/
             </Grid>
           ):(
             <div/>
