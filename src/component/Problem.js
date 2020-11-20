@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useState,createRef,useRef,useEffect,forwardRef, useImperativeHandle} from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 import {fetchProblem} from '../action/content'
 import {Grid,Paper,CardHeader,Avatar,Divider,Button} from '@material-ui/core';
@@ -79,12 +79,23 @@ const Problem=props=>{
 
   const classes = useStyles();
 
-  //console.log(props.data)
+  const questionRef=useRef()
+
+  console.log(props.data)
+
+  const evaluate=()=>{
+    if(questionRef.current.isValid())
+      window.alert(questionRef.current.getVerdict()?'correct answer':'incorrect answer')
+    else
+      
+      window.alert('enter your answer')
+  }
+
+
 
   return(
-    <Grid item xs={12}>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={8}>
+      <Grid container>
+        <Grid item xs={12} md={6}>
           <Paper style={{padding:'15px'}}>
             <CardHeader
                avatar={
@@ -95,37 +106,46 @@ const Problem=props=>{
 
                title={props.data.title}
                titleTypographyProps={{variant:'h6' }}
-               subheader={'-by '+'author_name'+' on '+timeConverter(props.data.timestamp)}
+               subheader={'-by '+'author_name'+' on '+timeConverter(parseInt(props.data.timestp))}
              />
             <MDEditor.Markdown source={props.data.description} />
             <Divider style={{margin:'10px'}}/>
             <MDEditor.Markdown source={props.data.data.problem.statement} />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <Paper style={{padding:'15px'}}>
-            <Question data={props.data.data.problem.data}/>
+            <Question ref={questionRef} data={props.data.data.problem.data}/>
             <Button
               style={{marginTop:'25px'}}
               variant='outlined'
               color='primary'
+              onClick={evaluate}
               fullWidth>
               Submit Answer
               </Button>
           </Paper>
         </Grid>
       </Grid>
-    </Grid>
   )
 }
 
-const Question=props=>{
+const Question=forwardRef((props,ref)=>{
 
-  console.log(props.data)
+  const questionRef=useRef()
+
+  useImperativeHandle(ref, () => ({
+    isValid(){
+      return questionRef.current.isValid()
+    },
+    getVerdict(){
+      return questionRef.current.getVerdict()
+    }
+ }));
 
   if(props.data.type==='mcq')
     return(
-      <MCQ data={props.data}/>
+      <MCQ ref={questionRef} data={props.data}/>
     )
   else if(props.data.type==='exclusion_grid'){
     var data={
@@ -135,14 +155,14 @@ const Question=props=>{
       state:props.data.initialState
     }
     return(
-      <Exclusion data={data}/>
+      <Exclusion ref={questionRef} data={data}/>
     )
   }
   else if(props.data.type==='text')
     return(
-      <Text data={props.data}/>
+      <Text ref={questionRef} data={props.data}/>
     )
-}
+})
 
 
 export default Problem;

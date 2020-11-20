@@ -4,8 +4,9 @@ import {base_url} from '../'
 const cookies = new Cookies();
 
 export const fetchTopics=(dispatcher)=>{
-  axios.get(base_url+'topics/1',{headers:{authorization:cookies.get('token')}}).then(res=>{
+  axios.get(base_url+'topics/en',{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(topicsDispatch(res.data))
+    console.log(res.data)
   }).catch(err=>{
     console.log(err)
   })
@@ -49,6 +50,15 @@ export const fetchProblem=(dispatcher,problem_id)=>{
   })
 }
 
+export const fetchProblemBySerial=(dispatcher,seriesId,serial)=>{
+  dispatcher(clearProblemDispatch())
+  axios.get(base_url+'problemBySerial/'+seriesId+'/'+serial,{headers:{authorization:cookies.get('token')}}).then(res=>{
+    dispatcher(problemDispatch(res.data))
+  }).catch(err=>{
+    console.log(err)
+  })
+}
+
 const problemDispatch=data=>{
   return{
     type:'UPDATE_PROBLEM',
@@ -61,3 +71,5 @@ const clearProblemDispatch=()=>{
     type:'CLEAR_PROBLEM'
   }
 }
+
+

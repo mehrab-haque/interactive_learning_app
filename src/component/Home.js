@@ -5,7 +5,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {Route, Switch,Link } from 'react-router-dom';
+import {BrowserRouter,Route, Switch,Link } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Circle } from 'rc-progress';
 import Typography from '@material-ui/core/Typography';
@@ -22,9 +22,17 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import './Home.css'
 import Topics from './Topics'
 import Serieses from './Serieses'
-import Problem from './Problem'
+import ProblemContainer from './ProblemContainer'
+import { createBrowserHistory } from "history";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
 
+
+const history = createBrowserHistory();
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -217,14 +225,32 @@ const Home=props=>{
         {
           profile!=null?(
             <Grid container spacing={1}>
+              <BrowserRouter history={history}>
                 <Switch>
                   <Route path="/" exact component={Topics}/>
                   <Route path="/topic/:id" component={Serieses}/>}/>
-                  <Route path="/problem/:id"component={Problem}/>}/>
+                  <Route path="/series/:series_id/:serial" component={ProblemContainer}/>}/>
                 </Switch>
-                 /*<Grid item xs={12} md={4}>
-                   Recommendation Part
-                 </Grid>*/
+              </BrowserRouter>
+              <Grid item xs={12} md={4}>
+                <Card className={classes.root1}>
+                  <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        image={require('../assets/icons/pr.png')}
+                        title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+
+                        <div>Start your journey</div>
+
+                      </Typography>
+
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
             </Grid>
           ):(
             <div/>

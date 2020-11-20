@@ -27,6 +27,9 @@ const Exclusion=forwardRef((props,ref1)=>{
     },
     isValid(){
       return true
+    },
+    getVerdict(){
+
     }
 
  }));
