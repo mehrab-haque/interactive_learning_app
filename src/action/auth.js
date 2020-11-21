@@ -6,6 +6,7 @@ const cookies = new Cookies();
 const COOKIE_AGE=31536000
 
 export const checkAuth=(dispatcher)=>{
+  console.log(cookies.get('token'))
   if(cookies.get('token')==undefined || cookies.get('token')==null)
     dispatcher(logoutDispatch())
   else
@@ -68,7 +69,7 @@ export const login=(data,dispatcher,callBack)=>{
 }
 
 export const logout=(dispatcher)=>{
-  cookies.remove('token')
+  cookies.remove('token',{ path: '/' })
   checkAuth(dispatcher)
 }
 
