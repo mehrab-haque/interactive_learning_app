@@ -103,14 +103,18 @@ const Serieses=props=>{
           <LinearProgress />
         ):(
           <div>
-            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+            <Breadcrumbs style={{marginLeft:'16px',marginBottom:'12px'}} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
               <Link color="inherit" to="/" >
+                <font style={{color:'#888888'}}>
                 Topics
+                </font>
               </Link>
               <Link color="inherit" to={'/topic/'+topicID+'/'}>
+                <font style={{color:'#888888'}}>
                 {serieses[0].topic_name}
+                </font>
               </Link>
-            </Breadcrumbs><br/>
+            </Breadcrumbs>
             <Grid direction='row' alignItems="stretch" container spacing={1} className={classes.grid}>
 
               {

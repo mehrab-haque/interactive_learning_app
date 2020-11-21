@@ -130,7 +130,9 @@ const Home=props=>{
           <center>
             <Avatar className={classes.orange} src={profile.image} style={{marginBottom:'20px',marginTop:'-20px',height:'80px',width:'80px'}} >{'name' in profile ? profile.name.substr(0,1):'N'}</Avatar>
             <Typography variant="h6" noWrap>
+              <font style={{color:'#666666'}}>
               {profile.name}
+              </font>
             </Typography>
 
             <Divider style={{marginTop:'20px'}}/>
@@ -139,7 +141,7 @@ const Home=props=>{
             <img style={{width:'100%'}} src={require('../assets/icons/graph2.png')}/>
 
             <Divider style={{marginTop:'20px'}}/>
-            <Button onClick={logoutClick} style={{marginTop:'20px'}} variant="contained" color="primary" >
+            <Button onClick={logoutClick} style={{marginTop:'20px'}} variant="outlined" color="primary" >
               Logout
             </Button>
 
@@ -165,7 +167,7 @@ const Home=props=>{
   return(
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar style={{backgroundColor:'#0090ff'}} position="fixed" className={classes.appBar}>
+      <AppBar style={{backgroundColor:'#ffffff',color:'#0090ff',boxShadow:'none'}} position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -180,6 +182,7 @@ const Home=props=>{
             Interactive Problem Solving
           </Typography>
         </Toolbar>
+        <Divider/>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}

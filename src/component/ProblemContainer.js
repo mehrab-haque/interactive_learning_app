@@ -50,18 +50,24 @@ const ProblemContainer=props=>{
                 problem!=null?(
                     <Grid container>
                         <Grid item xs={12}>
-                            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                            <Breadcrumbs style={{marginLeft:'16px',marginBottom:'12px'}} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                                 <Link color="inherit" to="/" >
-                                    Topics
+                                    <font style={{color:'#888888'}}>
+                                        Topics
+                                    </font>
                                 </Link>
                                 <Link color="inherit" to={'/topic/'+problem.topic_id+'/'}>
+                                    <font style={{color:'#888888'}}>
                                     {problem.topic_name}
+                                    </font>
                                 </Link>
                                 <Link color="inherit">
+                                    <font style={{color:'#888888'}}>
                                     {problem.series_name}
+                                    </font>
                                 </Link>
 
-                            </Breadcrumbs><br/>
+                            </Breadcrumbs>
                         </Grid>
                         <Grid item xs={12}>
                             <Stepper style={{marginTop:'12px',marginBottom:'-12px',padding:'10px'}} activeStep={serial-1} alternativeLabel>
