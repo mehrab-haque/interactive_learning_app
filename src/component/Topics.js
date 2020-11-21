@@ -917,7 +917,7 @@ const Topics=props=>{
 }
 ]
 
-//console.log(arr)
+////console.log(arr)
 
   return(
     <Problem data={arr[1]}/>

@@ -83,7 +83,7 @@ const Serieses=props=>{
 
 
   useEffect(() => {
-    //////console.log(props.profile)
+    ////////console.log(props.profile)
       /*firebase.firestore().collection('data').where('type','==','series').where('topic_id','==',topicID).orderBy("serial").get().then(res=>{
         setSerieses(res.docs)
         count(res.docs.length)

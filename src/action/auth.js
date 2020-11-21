@@ -26,7 +26,7 @@ export const googleAuth=(data,dispatcher)=>{
     cookies.set('token',res.data.token,{ path: '/', maxAge: COOKIE_AGE })
     checkAuth(dispatcher)
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
     checkAuth(dispatcher)
   })
 }
@@ -35,9 +35,9 @@ export const register=(data,dispatcher,callBack)=>{
   dispatcher(loadingDispatch())
   axios.post(base_url+'auth/registration',data).then(res=>{
     if(!('error' in res.data)){
-      console.log(res.data.token)
+      //console.log(res.data.token)
 
-      console.log(cookies.get('token'))
+      //console.log(cookies.get('token'))
       cookies.set('token',res.data.token,{ path: '/', maxAge: COOKIE_AGE })
 
       checkAuth(dispatcher)
@@ -46,7 +46,7 @@ export const register=(data,dispatcher,callBack)=>{
       checkAuth(dispatcher)
     }
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
     checkAuth(dispatcher)
   })
 }
@@ -62,7 +62,7 @@ export const login=(data,dispatcher,callBack)=>{
       checkAuth(dispatcher)
     }
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
     checkAuth(dispatcher)
   })
 }

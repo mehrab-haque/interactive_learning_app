@@ -12,6 +12,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {Grid} from "@material-ui/core";
+import uuid from 'react-uuid'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,11 +50,25 @@ const ProblemContainer=props=>{
                 problem!=null?(
                     <Grid container>
                         <Grid item xs={12}>
+                            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                                <Link color="inherit" to="/" >
+                                    Topics
+                                </Link>
+                                <Link color="inherit" to={'/topic/'+problem.topic_id+'/'}>
+                                    {problem.topic_name}
+                                </Link>
+                                <Link color="inherit">
+                                    {problem.series_name}
+                                </Link>
+
+                            </Breadcrumbs><br/>
+                        </Grid>
+                        <Grid item xs={12}>
                             <Stepper style={{marginTop:'12px',marginBottom:'-12px',padding:'10px'}} activeStep={serial-1} alternativeLabel>
                                 {
                                     Array(problem.nproblem).fill().map((_, i) =>{
                                         return(
-                                            <Step style={{cursor:'pointer'}} onClick={()=>{if(serial!=i+1)goto(i+1)}}>
+                                            <Step key={uuid()} style={{cursor:'pointer'}} onClick={()=>{if(serial!=i+1)goto(i+1)}}>
                                                 <StepLabel>
                                                 </StepLabel>
                                             </Step>
@@ -62,7 +77,7 @@ const ProblemContainer=props=>{
                                 }
                             </Stepper>
                         </Grid>
-                        <Grid xs={12}>
+                        <Grid item xs={12}>
                             <Problem data={problem}/>
                         </Grid>
 

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const Prob=props=>{
 
-  console.log(props.match.params)
+  //console.log(props.match.params)
 
   return(
     <div>

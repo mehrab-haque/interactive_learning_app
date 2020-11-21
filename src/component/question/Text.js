@@ -6,7 +6,7 @@ const Text=forwardRef((props,ref)=>{
   const textRef=useRef()
 
   useEffect(()=>{
-    console.log(props.data)
+    //console.log(props.data)
   },[])
 
   useImperativeHandle(ref, () => ({

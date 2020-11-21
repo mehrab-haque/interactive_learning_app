@@ -6,9 +6,9 @@ const cookies = new Cookies();
 export const fetchTopics=(dispatcher)=>{
   axios.get(base_url+'topics/en',{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(topicsDispatch(res.data))
-    console.log(res.data)
+    //console.log(res.data)
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
   })
 }
 
@@ -24,7 +24,7 @@ export const fetchSerieses=(dispatcher,topicID)=>{
   axios.get(base_url+'topic/'+topicID,{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(seriesesDispatch(res.data))
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
   })
 }
 
@@ -46,7 +46,7 @@ export const fetchProblem=(dispatcher,problem_id)=>{
   axios.get(base_url+'problem/'+problem_id,{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(problemDispatch(res.data[0]))
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
   })
 }
 
@@ -55,7 +55,7 @@ export const fetchProblemBySerial=(dispatcher,seriesId,serial)=>{
   axios.get(base_url+'problemBySerial/'+seriesId+'/'+serial,{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(problemDispatch(res.data))
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
   })
 }
 

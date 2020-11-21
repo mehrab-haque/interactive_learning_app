@@ -1,15 +1,17 @@
 import React,{useState,createRef,useRef,useEffect,forwardRef, useImperativeHandle} from 'react'
 import './exclusion.css'
+import uuid from 'react-uuid'
 
 const Exclusion=forwardRef((props,ref1)=>{
-  const [key,setKey]=useState(Date.now())
-  const [data,setData]=useState(props.data)
 
-  const ref=useRef()
+
+    const [key,setKey]=useState(Date.now())
+    const [data,setData]=useState(props.data)
+
 
   useEffect(() => {
-    console.log('data')
-   console.log(props.data)
+    //console.log('data')
+   //console.log(props.data)
  },[]);
 
   useImperativeHandle(ref1, () => ({
@@ -46,31 +48,29 @@ const Exclusion=forwardRef((props,ref1)=>{
             verdict=false;
         })
       })
-      console.log(data.map)
-      console.log(data.ansMap)
-      console.log(verdict)
+      //console.log(data.map)
+      //console.log(data.ansMap)
+      //console.log(verdict)
       if(verdict)props.correctCallBack();*/
   }
 
   return(
     <div>
-      <ExclusionFields callBack={updateTable} key={key} ref={ref} data={data}/>
+      <ExclusionFields callBack={updateTable} key={key} data={data}/>
     </div>
   )
 })
 
 const ExclusionFields=props=>{
 
-
-
   return(
     <table style={{width:'100%',cellSpacing:'2px'}}>
-    <tr>
+        <tbody><tr>
       <td><pre>    </pre></td>
       {
         props.data.cols.map(c=>{
           return(
-            <td>{c}</td>
+            <td key={uuid()}>{c}</td>
           )
         })
       }
@@ -78,12 +78,12 @@ const ExclusionFields=props=>{
     {
       props.data.rows.map((row,indY)=>{
         return(
-          <tr>
+          <tr key={uuid()}>
             <td style={{valign:"center"}}>{row}</td>
             {
               props.data.cols.map((col,indX)=>{
                 return(
-                  <td>
+                  <td key={uuid()}>
                   <img
                    onClick={()=>{
                       var state=props.data.state
@@ -98,6 +98,7 @@ const ExclusionFields=props=>{
         )
       })
     }
+        </tbody>
     </table>
   )
 }

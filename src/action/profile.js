@@ -7,7 +7,7 @@ export const fetchProfile=(dispatcher)=>{
   axios.get(base_url+'auth/profile',{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(profileDispatch(res.data))
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
   })
 }
 

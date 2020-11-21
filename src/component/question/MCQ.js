@@ -10,7 +10,7 @@ const MCQ=forwardRef((props,ref)=>{
   };
 
   useEffect(()=>{
-    //console.log(props.data)
+    ////console.log(props.data)
   },[])
 
   useImperativeHandle(ref, () => ({

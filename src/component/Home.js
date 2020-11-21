@@ -126,7 +126,7 @@ const Home=props=>{
       {profile==null?(
         <LinearProgress />
       ):(<div>
-        <div className={classes.toolbar} />
+        <div style={{marginBottom:'-40px'}} className={classes.toolbar} />
           <center>
             <Avatar className={classes.orange} src={profile.image} style={{marginBottom:'20px',marginTop:'-20px',height:'80px',width:'80px'}} >{'name' in profile ? profile.name.substr(0,1):'N'}</Avatar>
             <Typography variant="h6" noWrap>
@@ -135,16 +135,8 @@ const Home=props=>{
 
             <Divider style={{marginTop:'20px'}}/>
 
-            <Typography style={{marginTop:'24px'}} variant="body2" color="textSecondary" component="p">
-              Submitted -> {'t' in profile?(<font>{profile.t}</font>):(<font>0</font>)}
-            </Typography>
-            <Typography style={{marginTop:'10px'}}  variant="body2" color="textSecondary" component="p">
-              Correct -> {'r' in profile?(<font>{profile.r}</font>):(<font>0</font>)}
-            </Typography>
-            <Typography style={{marginTop:'10px'}}  variant="body2" color="textSecondary" component="p">
-              Success -> {'r' in profile?(<font>{(profile.r*100.0/profile.t).toFixed(2)+'%'}</font>):(<font>0%</font>)}
-            </Typography>
-            <Circle style={{width:'50%',marginTop:'20px'}}  percent={'r' in profile?((profile.r*100.0/profile.t).toFixed(2)):(0)} strokeWidth="20" trailWidth='20' strokeLinecap='square' strokeColor="limegreen" trailColor="#D5D5D5" />
+            <img style={{width:'100%'}} src={require('../assets/icons/graph1.png')}/>
+            <img style={{width:'100%'}} src={require('../assets/icons/graph2.png')}/>
 
             <Divider style={{marginTop:'20px'}}/>
             <Button onClick={logoutClick} style={{marginTop:'20px'}} variant="contained" color="primary" >
@@ -233,7 +225,7 @@ const Home=props=>{
                 </Switch>
               </BrowserRouter>
               <Grid item xs={12} md={4}>
-                <Card className={classes.root1}>
+                <Card className={classes.root}>
                   <CardActionArea>
                     <CardMedia
                         className={classes.media}

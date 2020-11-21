@@ -22,7 +22,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {checkAuth,googleAuth,login,register} from './action/auth'
 import {useSelector,useDispatch} from 'react-redux'
 import Home from './component/Home'
-import uuid from 'react-uuid'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,7 +63,7 @@ function App() {
 
 
   const google=res=>{
-    console.log(res)
+    //console.log(res)
     if(res.accessToken!=undefined)
       googleAuth({access_token:res.accessToken},dispatch)
   }

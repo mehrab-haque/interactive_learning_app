@@ -95,37 +95,36 @@ const Problem=props=>{
 
   return(
       <Grid container>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Paper style={{padding:'15px'}}>
             <CardHeader
                avatar={
-                 <Avatar aria-label="recipe" className={classes.avatar}>
-                   A
+                 <Avatar aria-label="recipe" src={props.data.author_image} className={classes.avatar}>
+                     {props.data.author_name.substr(0,1)}
                  </Avatar>
                }
 
                title={props.data.title}
                titleTypographyProps={{variant:'h6' }}
-               subheader={'-by '+'author_name'+' on '+timeConverter(parseInt(props.data.timestp))}
+               subheader={'-by '+props.data.author_name+' on '+timeConverter(parseInt(props.data.timestp))}
              />
             <MDEditor.Markdown source={props.data.description} />
             <Divider style={{margin:'10px'}}/>
             <MDEditor.Markdown source={props.data.data.problem.statement} />
           </Paper>
+            <Paper style={{padding:'15px'}}>
+                <Question ref={questionRef} data={props.data.data.problem.data}/>
+                <Button
+                    style={{marginTop:'25px'}}
+                    variant='outlined'
+                    color='primary'
+                    onClick={evaluate}
+                    fullWidth>
+                    Submit Answer
+                </Button>
+            </Paper>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper style={{padding:'15px'}}>
-            <Question ref={questionRef} data={props.data.data.problem.data}/>
-            <Button
-              style={{marginTop:'25px'}}
-              variant='outlined'
-              color='primary'
-              onClick={evaluate}
-              fullWidth>
-              Submit Answer
-              </Button>
-          </Paper>
-        </Grid>
+
       </Grid>
   )
 }
