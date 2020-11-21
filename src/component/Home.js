@@ -178,8 +178,9 @@ const Home=props=>{
           >
             <MenuIcon />
           </IconButton>
+          <img src={require('../assets/icons/logo.png')} style={{height:'36px'}}/>
           <Typography variant="h6" noWrap>
-            Interactive Problem Solving
+            Interactive Problems
           </Typography>
         </Toolbar>
         <Divider/>
