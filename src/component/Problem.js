@@ -79,16 +79,24 @@ const Problem=props=>{
 
   const classes = useStyles();
 
+  const interactiveRef=useRef()
   const questionRef=useRef()
 
   console.log(props.data)
 
   const evaluate=()=>{
-    if(questionRef.current.isValid())
-      window.alert(questionRef.current.getVerdict()?'correct answer':'incorrect answer')
-    else
-      
-      window.alert('enter your answer')
+      if(props.data.data.data.type!=='interactive'){
+          if(questionRef.current.isValid())
+              window.alert(questionRef.current.getVerdict()?'correct answer':'incorrect answer')
+          else
+              window.alert('enter your answer')
+      }else{
+          if(interactiveRef.current.isValid())
+              window.alert(interactiveRef.current.getVerdict()?'correct answer':'incorrect answer')
+          else
+              window.alert('enter your answer')
+      }
+
   }
 
 
@@ -108,12 +116,13 @@ const Problem=props=>{
                titleTypographyProps={{variant:'h6' }}
                subheader={'-by '+props.data.author_name+' on '+timeConverter(parseInt(props.data.timestp))}
              />
-            <MDEditor.Markdown source={props.data.description} />
+            <MDEditor.Markdown source={props.data.data.description} />
             <Divider style={{margin:'10px'}}/>
-            <MDEditor.Markdown source={props.data.data.problem.statement} />
+            <MDEditor.Markdown source={props.data.data.statement} />
           </Paper>
             <Paper style={{padding:'15px'}}>
-                <Question ref={questionRef} data={props.data.data.problem.data}/>
+                <Interactive ref={interactiveRef} data={props.data.data}/>
+                <Question ref={questionRef} data={props.data.data}/>
                 <Button
                     style={{marginTop:'25px'}}
                     variant='outlined'
@@ -129,9 +138,44 @@ const Problem=props=>{
   )
 }
 
+const Interactive=forwardRef((props,ref)=>{
+
+    const interactiveRef=useRef()
+
+    //console.log(props.data)
+
+    useImperativeHandle(ref, () => ({
+        isValid(){
+            return interactiveRef.current.isValid()
+        },
+        getVerdict(){
+            return interactiveRef.current.getVerdict()
+        }
+    }));
+
+    //console.log(props.data)
+    if(props.data.type==='exclusion_grid'){
+        //console.log(props.data)
+        var data={
+            rows:props.data.data.rowHeading,
+            cols:props.data.data.columnHeading,
+            data:props.data.data.cell,
+            state:props.data.data.initialState,
+            sol:props.data.data.data.answer
+        }
+        return(
+            <Exclusion ref={interactiveRef} data={data}/>
+        )
+    }
+    else
+        return <div/>
+})
+
 const Question=forwardRef((props,ref)=>{
 
   const questionRef=useRef()
+
+    //console.log(props.data)
 
   useImperativeHandle(ref, () => ({
     isValid(){
@@ -142,25 +186,18 @@ const Question=forwardRef((props,ref)=>{
     }
  }));
 
-  if(props.data.type==='mcq')
+  //console.log(props.data)
+
+  if(props.data.data.type==='mcq')
     return(
-      <MCQ ref={questionRef} data={props.data}/>
+      <MCQ ref={questionRef} data={props.data.data}/>
     )
-  else if(props.data.type==='exclusion_grid'){
-    var data={
-      rows:props.data.rowHeading,
-      cols:props.data.columnHeading,
-      data:props.data.cell,
-      state:props.data.initialState
-    }
+  else if(props.data.data.type==='text')
     return(
-      <Exclusion ref={questionRef} data={data}/>
+      <Text ref={questionRef} data={props.data.data}/>
     )
-  }
-  else if(props.data.type==='text')
-    return(
-      <Text ref={questionRef} data={props.data}/>
-    )
+  else
+      return <div/>
 })
 
 

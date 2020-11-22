@@ -11,7 +11,7 @@ const Exclusion=forwardRef((props,ref1)=>{
 
   useEffect(() => {
     //console.log('data')
-   //console.log(props.data)
+   console.log(props.data)
  },[]);
 
   useImperativeHandle(ref1, () => ({
@@ -31,7 +31,9 @@ const Exclusion=forwardRef((props,ref1)=>{
       return true
     },
     getVerdict(){
-
+        var schema1=props.data.sol
+        var schema2=data.state
+        return JSON.stringify(schema1)===JSON.stringify(schema2)
     }
 
  }));
