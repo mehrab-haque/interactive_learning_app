@@ -44,6 +44,11 @@ const ProblemContainer=props=>{
         //window.location.reload()
     }
 
+    const nextProblem=()=>{
+        if(problem.serial<problem.nproblem)
+            goto(parseInt(problem.serial)+1)
+    }
+
     return(
         <Grid item xs={12} md={8}>
             {
@@ -84,7 +89,7 @@ const ProblemContainer=props=>{
                             </Stepper>
                         </Grid>
                         <Grid item xs={12}>
-                            <Problem data={problem}/>
+                            <Problem next={nextProblem} data={problem}/>
                         </Grid>
 
                     </Grid>

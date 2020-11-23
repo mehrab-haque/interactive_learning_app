@@ -8,6 +8,9 @@ const Exclusion=forwardRef((props,ref1)=>{
     const [key,setKey]=useState(Date.now())
     const [data,setData]=useState(props.data)
 
+    //console.log('hi')
+        ///.log(props.data)
+
 
   useEffect(() => {
     //console.log('data')
