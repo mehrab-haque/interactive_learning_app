@@ -50,7 +50,7 @@ const ProblemContainer=props=>{
     }
 
     return(
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={9}>
             {
                 problem!=null?(
                     <Grid container>
@@ -91,7 +91,6 @@ const ProblemContainer=props=>{
                         <Grid item xs={12}>
                             <Problem next={nextProblem} data={problem}/>
                         </Grid>
-
                     </Grid>
                 ):(
                     <LinearProgress/>

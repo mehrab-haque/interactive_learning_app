@@ -31,7 +31,7 @@ import CardContent from "@material-ui/core/CardContent";
 
 
 const history = createBrowserHistory();
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 
 const useStyles = makeStyles((theme) => ({
@@ -229,7 +229,7 @@ const Home=props=>{
                   <Route path="/series/:series_id/:serial" component={ProblemContainer}/>}/>
                 </Switch>
               </BrowserRouter>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={3}>
                 <Card className={classes.root}>
                   <CardActionArea>
                     <CardMedia

@@ -24,6 +24,8 @@ import Answer from "./Answer";
 
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
+import './problem.css'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -92,6 +94,8 @@ const timeConverter = UNIX_timestamp => {
 }
 
 const Problem = props => {
+
+    console.log(props.data.data.statement.split('![]'))
 
     const classes = useStyles();
 
@@ -232,18 +236,18 @@ const Problem = props => {
                 <Paper style={{padding: '15px'}}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="recipe" src={props.data.author_image} className={classes.avatar}>
+                            <Avatar aria-label="recipe" src={props.data.logo} style={{width:'60px',height:'60px'}}>
                                 {props.data.author_name.substr(0, 1)}
                             </Avatar>
                         }
 
                         title={props.data.title}
                         titleTypographyProps={{variant: 'h6'}}
-                        subheader={'-by ' + props.data.author_name + ' on ' + timeConverter(parseInt(props.data.timestp))}
+                        subheader={'grade :' + props.data.grade + ', difficulty: ' + props.data.difficulty}
                     />
-                    <MDEditor.Markdown source={props.data.data.description}/>
+                    <MDEditor.Markdown className='md' source={props.data.data.description}/>
                     <Divider style={{margin: '10px'}}/>
-                    <MDEditor.Markdown source={props.data.data.statement}/>
+                    <MDEditor.Markdown className='md' source={props.data.data.statement}/>
                 </Paper>
                 <Paper style={{padding: '15px'}}>
                     <Interactive ref={interactiveRef} data={props.data.data}/>
