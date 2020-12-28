@@ -20,6 +20,7 @@ import {makeStyles, useTheme} from '@material-ui/core/styles';
 import MCQ from './question/MCQ'
 import Text from './question/Text'
 import Exclusion from './question/Exclusion'
+import Grouping from './question/Grouping'
 import Answer from "./Answer";
 
 import toastr from 'reactjs-toastr';
@@ -95,7 +96,9 @@ const timeConverter = UNIX_timestamp => {
 
 const Problem = props => {
 
-    console.log(props.data.data.statement.split('![]'))
+    //console.log(props.data.data.statement.split('![]'))
+
+
 
     const classes = useStyles();
 
@@ -107,6 +110,7 @@ const Problem = props => {
     const questionRef = useRef()
 
 
+    console.log('hi')
     console.log(props.data)
 
 
@@ -216,7 +220,6 @@ const Problem = props => {
                     </DialogTitle>
                     <DialogContent>
                         <Typography>
-                            <u>Correct Answer :</u>
                             <Answer interactive={props.data.data.type} data={props.data.data.data}/>
                         </Typography><br/>
                         <u>Explanation :</u>
@@ -236,7 +239,7 @@ const Problem = props => {
                 <Paper style={{padding: '15px'}}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="recipe" src={props.data.logo} style={{width:'60px',height:'60px'}}>
+                            <Avatar aria-label="recipe" src={props.data.logo}>
                                 {props.data.author_name.substr(0, 1)}
                             </Avatar>
                         }
@@ -295,7 +298,25 @@ const Interactive = forwardRef((props, ref) => {
         return (
             <Exclusion ref={interactiveRef} data={data}/>
         )
-    } else
+    } else if(props.data.type==='dragAndDrop-1') {
+        var containers=[],schema=[]
+        props.data.data.containers.map(container=>{
+            containers.push(container.label)
+            schema.push([])
+        })
+        var tmpData={
+            containers:containers,
+            items:props.data.data.unselected,
+            schema:schema,
+            answer:props.data.data.data.answer
+        }
+        //console.log('hi')
+        //console.log(tmpData)
+        return (
+            <Grouping ref={interactiveRef} data={tmpData}/>
+        )
+    }
+    else
         return <div/>
 })
 

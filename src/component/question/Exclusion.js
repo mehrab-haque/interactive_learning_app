@@ -1,6 +1,22 @@
 import React,{useState,createRef,useRef,useEffect,forwardRef, useImperativeHandle} from 'react'
 import './exclusion.css'
 import uuid from 'react-uuid'
+import { makeStyles } from '@material-ui/core/styles';
+
+import Paper from "@material-ui/core/Paper";
+import Table from '@material-ui/core/Table';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+
+const useStyles = makeStyles({
+    root: {
+        width: '100%',
+        overflowX: 'auto',
+    },
+    table: {
+        maxWidth: '100%',
+    },
+});
 
 const Exclusion=forwardRef((props,ref1)=>{
 
@@ -60,7 +76,7 @@ const Exclusion=forwardRef((props,ref1)=>{
   }
 
   return(
-    <div>
+    <div className='table_container'>
       <ExclusionFields callBack={updateTable} key={key} data={data}/>
     </div>
   )
@@ -68,8 +84,53 @@ const Exclusion=forwardRef((props,ref1)=>{
 
 const ExclusionFields=props=>{
 
-  return(
-    <table style={{width:'100%',cellSpacing:'2px'}}>
+    const classes = useStyles();
+
+    return(
+        <Paper className={classes.root}>
+        <Table className={classes.table} aria-label="spanning table">
+            <TableRow>
+                <TableCell>
+
+                </TableCell>
+                {
+                    props.data.cols.map(c=>{
+                        return(
+                            <TableCell key={uuid()}>{c}</TableCell>
+                        )
+                    })
+                }
+            </TableRow>
+            {
+                props.data.rows.map((row,indY)=>{
+                    return(
+                        <TableRow key={uuid()}>
+                            <TableCell style={{valign:"center"}}>{row}</TableCell>
+                            {
+                                props.data.cols.map((col,indX)=>{
+                                    return(
+                                        <TableCell key={uuid()}>
+                                            <img
+                                                onClick={()=>{
+                                                    var state=props.data.state
+                                                    state[indY][indX]=!state[indY][indX]
+                                                    props.callBack(state)
+                                                }} className={!props.data.state[indY][indX]?"bw" : ""} style={{maxHeight:'26px',cursor:'pointer'}} src={props.data.data[indY][indX]}/>
+                                        </TableCell>
+                                    )
+                                })
+                            }
+                        </TableRow>
+                    )
+                })
+            }
+
+        </Table>
+        </Paper>
+        )
+
+    return(
+    <table style={{cellSpacing:'2px'}} className='exclusion_table'>
         <tbody><tr>
       <td><pre>    </pre></td>
       {

@@ -4,3 +4,20 @@
 .cl{
   filter: grayscale(0%);
 }
+
+.exclusion_table{
+  width: auto;
+}
+
+
+
+.table_container{
+
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: scroll;
+  position: relative;
+
+
+
+}
