@@ -21,6 +21,9 @@ import MCQ from './question/MCQ'
 import Text from './question/Text'
 import Exclusion from './question/Exclusion'
 import Grouping from './question/Grouping'
+import Rearranging from './question/Rearranging'
+import Matchsticks from './question/Matchsticks'
+import Venn from './question/Venn'
 import Answer from "./Answer";
 
 import toastr from 'reactjs-toastr';
@@ -276,6 +279,7 @@ const Interactive = forwardRef((props, ref) => {
 
     //console.log(props.data)
 
+
     useImperativeHandle(ref, () => ({
         isValid() {
             return interactiveRef.current.isValid()
@@ -315,9 +319,33 @@ const Interactive = forwardRef((props, ref) => {
         return (
             <Grouping ref={interactiveRef} data={tmpData}/>
         )
+    } else if(props.data.type==='rearrange') {
+
+        var tmpData={
+            items:props.data.data.fields,
+            sol: props.data.data.data.answer
+        }
+        return (
+            <Rearranging ref={interactiveRef} data={tmpData}/>
+        )
+    }
+    else if(props.data.type==='matchstick') {
+
+        console.log(props.data)
+        return (
+            <Matchsticks containerId='question' ref={interactiveRef} editor={false} data={props.data.data}/>
+        )
+    }
+    else if(props.data.type==='venn') {
+
+        //console.log(props.data)
+        return (
+            <Venn containerId='question' ref={interactiveRef} editor={false} data={props.data.data}/>
+        )
     }
     else
         return <div/>
+
 })
 
 const Question = forwardRef((props, ref) => {

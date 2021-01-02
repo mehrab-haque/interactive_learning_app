@@ -120,7 +120,7 @@ const Serieses=props=>{
               {
                 serieses.map((series,ind)=>{
                   return(
-                    <Grid style={{minHeight:'100%'}} item xs={6} md={4}>
+                    <Grid style={{minHeight:'100%'}} item xs={6} md={3}>
                       <Link color="inherit" to={'/series/'+series.series_id+'/1'}>
                         <Card style={{height:'100%'}} className={classes.root1}>
                           <CardActionArea>

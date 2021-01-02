@@ -114,7 +114,7 @@ const Topics=props=>{
               {
                 topics.map((topic,ind)=>{
                   return(
-                    <Grid key={uuid()} style={{minHeight:'100%'}} item xs={6} md={4}>
+                    <Grid key={uuid()} style={{minHeight:'100%'}} item xs={6} md={3}>
                       <Link color="inherit" to={'/topic/'+topic.topic_id+'/'} onClick={(e) => {e.stopPropagation();}}>
                         <Card className={classes.root1}>
                           <CardActionArea>
