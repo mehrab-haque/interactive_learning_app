@@ -367,6 +367,11 @@ const commentRef=useRef()
                 </DialogContent>
                 <DialogActions>
                     <Button
+                        color='secondary'
+                        onClick={()=>{setFeedbackdialog(false)}}>
+                        Skip
+                    </Button>
+                    <Button
                         color='primary'
                         onClick={feedbackSubmit}>
                         Submit
