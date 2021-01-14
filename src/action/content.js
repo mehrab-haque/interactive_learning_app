@@ -59,6 +59,31 @@ export const fetchProblemBySerial=(dispatcher,seriesId,serial)=>{
   })
 }
 
+export const checkFeedback=(problem_id,user_id)=>{
+  return axios.post(base_url+'/feedback/submissionStatus/',
+      {
+        "problem_id": problem_id,
+        "user_id": user_id
+      },
+      {headers:{authorization:cookies.get('token')}}
+  ).then(res=>{
+    console.log(res.data)
+    return res.data
+  }).catch(err=>{
+    //console.log(err)
+  })
+}
+
+export const submitFeedback=feedback=>{
+  return axios.post(base_url+'/feedback/submitFeedback/',feedback,
+      {headers:{authorization:cookies.get('token')}}
+  ).then(res=>{
+    console.log(res.data)
+  }).catch(err=>{
+    //console.log(err)
+  })
+}
+
 const problemDispatch=data=>{
   return{
     type:'UPDATE_PROBLEM',
@@ -71,5 +96,6 @@ const clearProblemDispatch=()=>{
     type:'CLEAR_PROBLEM'
   }
 }
+
 
 

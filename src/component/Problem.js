@@ -1,6 +1,8 @@
 import React, {useState, createRef, useRef, useEffect, forwardRef, useImperativeHandle} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
-import {fetchProblem} from '../action/content'
+import {useSelector} from 'react-redux'
+
+import StarRatings from 'react-star-ratings';
+
 import {
     Grid,
     Paper,
@@ -29,6 +31,13 @@ import Answer from "./Answer";
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
 import './problem.css'
+import Fab from "@material-ui/core/Fab";
+
+import {checkFeedback,submitFeedback} from "../action/content";
+
+import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
+import {TextFields} from "@material-ui/icons";
+import TextField from "@material-ui/core/TextField";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,6 +90,13 @@ const useStyles = makeStyles((theme) => ({
     purple: {
         color: theme.palette.getContrastText(deepPurple[500]),
         backgroundColor: deepPurple[500],
+    },
+    margin: {
+        margin: theme.spacing(0.5),
+        position:'fixed',
+        bottom:10,
+        right:10,
+        zIndex:10000
     }
 }));
 
@@ -101,20 +117,59 @@ const Problem = props => {
 
     //console.log(props.data.data.statement.split('![]'))
 
-
+    const profile=useSelector(state=>state.profile)
 
     const classes = useStyles();
 
     const [verdict, setVerdict] = useState(false)
     const [prompt,setPrompt]=useState(false)
     const [explanation,setExplanation]=useState(false)
+    const [rating,setRating]=useState(0)
+
+const commentRef=useRef()
+
+    const [hintDialog,setHintDialog]=useState(false)
+
+    const [feedbackDialog,setFeedbackdialog]=useState(false)
 
     const interactiveRef = useRef()
     const questionRef = useRef()
 
+    const feedbackCheck=()=>{
+        checkFeedback(props.data.problem_id,profile.user_id).then(res=>{
+            setFeedbackdialog(!res.feedbackexists)
+        })
+    }
 
-    console.log('hi')
-    console.log(props.data)
+    const feedbackSubmit=()=>{
+        if(rating===0)
+            window.alert('please rate 1~3')
+        else{
+            var comment=commentRef.current.value
+            var feedback={
+                problem_id:props.data.problem_id,
+                user_id:profile.user_id,
+                feedback:rating,
+            }
+            if(comment.trim().length>0)
+                feedback['comment']=comment.trim()
+
+            submitFeedback(feedback)
+            setFeedbackdialog(false)
+
+        }
+    }
+
+    const changeRating=newRating=>{
+        setRating(newRating)
+    }
+
+    useEffect(()=>{
+        console.log(rating)
+    },[rating])
+
+   // console.log('hi')
+    //console.log(props.data)
 
 
     const evaluate = () => {
@@ -133,12 +188,54 @@ const Problem = props => {
             else
                 toastr.error('Enter Your Answer', 'Error')
         }
-
+        feedbackCheck()
     }
 
 
     return (
         <Grid container>
+
+            {
+                props.data.data!==undefined && 'hint' in props.data.data && props.data.data.hint.length>0?(
+                    <Fab onClick={()=>{setHintDialog(true)}} color="secondary" aria-label="add" className={classes.margin}>
+                        <WbIncandescentIcon/>
+                    </Fab>
+                ):(
+                    <div/>
+                )
+            }
+
+            <Dialog open={hintDialog} onClose={()=>{setHintDialog(false)}}>
+                <DialogTitle>
+                    Hint
+                </DialogTitle>
+                <DialogContent>
+                    {
+                        props.data.data!==undefined && 'hint' in props.data.data?(
+                        <div>
+                            {
+                                props.data.data.hint.map(h=>{
+                                    return(
+                                        <MDEditor.Markdown source={h}/>
+                                    )
+                                })
+                            }
+                        </div>
+                        ):(
+                            <div/>
+                        )
+                    }
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        color='primary'
+                        onClick={()=>{setHintDialog(false)}}>
+                        Got it
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+
             <Dialog open={prompt} onClose={()=>{setPrompt(false)}}>
                 <DialogTitle>
                     {
@@ -238,6 +335,44 @@ const Problem = props => {
                 </Dialog>
 
             </Dialog>
+
+            <Dialog open={feedbackDialog}>
+                <DialogTitle>
+                    Feedback
+                </DialogTitle>
+                <DialogContent>
+                    <center>
+                        <StarRatings
+                            rating={rating}
+                            starRatedColor="#0090ff"
+                            changeRating={changeRating}
+                            numberOfStars={3}
+                            name='rating'
+                        />
+                        <Typography style={{marginTop:'10px',color:'#888888'}}>
+                            1 Star : Normal Problem<br/>
+                            2 Stars : Good Problem<br/>
+                            3 Stars : Excellent Problem
+                        </Typography>
+                    </center>
+                    <TextField
+                        inputRef={commentRef}
+                        style={{marginTop:'10px'}}
+                        label='comment (if any)'
+                        variant='outlined'
+                        multiline
+                        rows={2}
+                        fullWidth/>
+
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        color='primary'
+                        onClick={feedbackSubmit}>
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <Grid item xs={12}>
                 <Paper style={{padding: '15px'}}>
                     <CardHeader
@@ -331,7 +466,7 @@ const Interactive = forwardRef((props, ref) => {
     }
     else if(props.data.type==='matchstick') {
 
-        console.log(props.data)
+        //console.log(props.data)
         return (
             <Matchsticks containerId='question' ref={interactiveRef} editor={false} data={props.data.data}/>
         )

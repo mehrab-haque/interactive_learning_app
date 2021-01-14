@@ -128,7 +128,7 @@ const Topics=props=>{
                                 {topic.name}
                               </Typography>
                               <Typography variant="body2" color="textSecondary" component="p">
-                                {topic.nseries} Serieses<br/>
+                                {topic.nseries} Series<br/>
                                 {topic.nproblem} Problems<br/>
                               </Typography>
                             </CardContent>
