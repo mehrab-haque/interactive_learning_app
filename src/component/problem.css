@@ -11,3 +11,11 @@
     -ms-filter: blur(4px);
     filter: blur(4px);
 }
+
+@media only screen and (min-width: 600px) {
+    .md img{
+        width: 25%;
+        margin-left: 37%;
+        display: block;
+    }
+}

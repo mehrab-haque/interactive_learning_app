@@ -125,6 +125,7 @@ const Problem = props => {
     const [prompt,setPrompt]=useState(false)
     const [explanation,setExplanation]=useState(false)
     const [rating,setRating]=useState(0)
+    const [hintState,setHintState]=useState(-1)
 
 const commentRef=useRef()
 
@@ -214,10 +215,35 @@ const commentRef=useRef()
                         props.data.data!==undefined && 'hint' in props.data.data?(
                         <div>
                             {
-                                props.data.data.hint.map(h=>{
-                                    return(
-                                        <MDEditor.Markdown source={h}/>
-                                    )
+                                props.data.data.hint.map((h,i)=>{
+                                    if(i<=hintState){
+                                        return(
+                                            <div>
+                                                <Typography>
+                                                    Hint {(i+1)} :
+                                                </Typography>
+                                                <center>
+                                                    <div className='hintContainer'>
+                                                        <MDEditor.Markdown source={h}/>
+                                                    </div>
+                                                </center>
+                                            </div>
+                                        )
+                                    }else{
+                                        return(
+                                            <div>
+                                                <Typography>
+                                                    Hint {(i+1)} :
+                                                </Typography>
+                                                <center>
+                                                    <div className='hintContainer'>
+                                                        <img style={{cursor:'pointer'}} onClick={()=>{setHintState(i)}} src={require('../assets/icons/blur.png')} width={'100%'}/>
+                                                    </div>
+                                                </center>
+                                            </div>
+                                        )
+                                    }
+
                                 })
                             }
                         </div>
