@@ -1,5 +1,5 @@
 import React, {useState, createRef, useRef, useEffect, forwardRef, useImperativeHandle} from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 import StarRatings from 'react-star-ratings';
 
@@ -18,7 +18,7 @@ import {
 } from '@material-ui/core';
 import MDEditor from '@uiw/react-md-editor';
 import {deepOrange, deepPurple} from '@material-ui/core/colors';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {createMuiTheme, makeStyles, MuiThemeProvider, useTheme} from '@material-ui/core/styles';
 import MCQ from './question/MCQ'
 import Text from './question/Text'
 import Exclusion from './question/Exclusion'
@@ -33,11 +33,30 @@ import 'reactjs-toastr/lib/toast.css';
 import './problem.css'
 import Fab from "@material-ui/core/Fab";
 
-import {checkFeedback,submitFeedback} from "../action/content";
+import {checkFeedback, setErroredProblems, submitFeedback, submitSolution} from "../action/content";
 
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
 import {TextFields} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
+import DragAndDrop from "./question/DragAndDrop";
+
+const myTheme = createMuiTheme({
+    palette: {
+        text: {
+            default: '#fff',
+        },
+        textColor: '#fff',
+        primary: {
+            main: '#55b5ff',
+            contrastText: "#fff"
+        }
+    },
+    stepper: {
+        iconColor: 'green',
+        textColor: 'white'// or logic to change color
+    }
+})
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -115,6 +134,10 @@ const timeConverter = UNIX_timestamp => {
 
 const Problem = props => {
 
+    const erroredProblems=useSelector(state=>state.erroredProblems)
+
+    const dispatch=useDispatch()
+
     //console.log(props.data.data.statement.split('![]'))
 
     const profile=useSelector(state=>state.profile)
@@ -170,14 +193,20 @@ const commentRef=useRef()
     },[rating])
 
    // console.log('hi')
-    //console.log(props.data)
+    console.log(props.data)
 
 
     const evaluate = () => {
+
+        var verd=false
+
+        console.log(props.data)
+
         if (props.data.data.data.type !== 'interactive') {
             if (questionRef.current.isValid()){
                 setVerdict(questionRef.current.getVerdict())
                 setPrompt(true)
+                verd=questionRef.current.getVerdict()
             }
             else
                 toastr.error('Enter Your Answer', 'Error')
@@ -185,10 +214,41 @@ const commentRef=useRef()
             if (interactiveRef.current.isValid()) {
                 setVerdict(interactiveRef.current.getVerdict())
                 setPrompt(true)
+                verd=interactiveRef.current.getVerdict()
             }
             else
                 toastr.error('Enter Your Answer', 'Error')
         }
+
+        var status=0
+        if(verd)status=1
+
+        submitSolution({
+            problem_id:props.data.problem_id,
+            user_id:profile.user_id,
+            sub_status:status
+        })
+
+        if(!verd){
+            if(erroredProblems!==null){
+                var isIn=false
+                erroredProblems.problemlist.map(eP=>{
+                    if(eP.problem_id===props.data.problem_id)
+                        isIn = true
+                })
+                if(!isIn){
+                    var list=[props.data]
+                    erroredProblems.problemlist.map(eP=>{
+                        list.push(eP)
+                    })
+                    setErroredProblems(dispatch, {
+                        problemlist:list
+                    })
+                }
+            }else
+                erroredProblems.push(props.data)
+        }
+
         feedbackCheck()
     }
 
@@ -197,7 +257,7 @@ const commentRef=useRef()
         <Grid container>
 
             {
-                props.data.data!==undefined && 'hint' in props.data.data && props.data.data.hint.length>0?(
+                props.data.data!==undefined && 'hint' in props.data.data  && Array.isArray(props.data.data.hint) && props.data.data.hint.length>0?(
                     <Fab onClick={()=>{setHintDialog(true)}} color="secondary" aria-label="add" className={classes.margin}>
                         <WbIncandescentIcon/>
                     </Fab>
@@ -212,7 +272,7 @@ const commentRef=useRef()
                 </DialogTitle>
                 <DialogContent>
                     {
-                        props.data.data!==undefined && 'hint' in props.data.data?(
+                        props.data.data!==undefined && 'hint' in props.data.data && Array.isArray(props.data.data.hint)?(
                         <div>
                             {
                                 props.data.data.hint.map((h,i)=>{
@@ -404,36 +464,41 @@ const commentRef=useRef()
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={12}>
                 <Paper style={{padding: '15px'}}>
                     <CardHeader
                         avatar={
                             <Avatar aria-label="recipe" src={props.data.logo}>
                                 {props.data.author_name.substr(0, 1)}
+                     e           {props.data.author_name.substr(0, 1)}
                             </Avatar>
                         }
 
                         title={props.data.title}
                         titleTypographyProps={{variant: 'h6'}}
-                        subheader={'grade :' + props.data.grade + ', difficulty: ' + props.data.difficulty}
+                        subheader={'Level :' + props.data.grade }
                     />
                     <MDEditor.Markdown className='md' source={props.data.data.description}/>
-                    <Divider style={{margin: '10px'}}/>
-                    <MDEditor.Markdown className='md' source={props.data.data.statement}/>
-                </Paper>
-                <Paper style={{padding: '15px'}}>
-                    <Interactive ref={interactiveRef} data={props.data.data}/>
-                    <Question ref={questionRef} data={props.data.data}/>
-                    <Button
-                        style={{marginTop: '25px'}}
-                        variant='outlined'
-                        color='primary'
-                        onClick={evaluate}
-                        fullWidth>
-                        Submit Answer
-                    </Button>
                 </Paper>
             </Grid>
+                <Grid item xs={12} md={12}>
+                    <Paper style={{padding: '15px'}}>
+                    <MDEditor.Markdown className='md' source={props.data.data.statement}/>
+                    <Paper style={{padding: '15px'}}>
+                        <Interactive ref={interactiveRef} data={props.data.data}/>
+                        <Question ref={questionRef} data={props.data.data}/>
+                        <center>
+                            <MuiThemeProvider theme={myTheme}><Button
+                            style={{marginTop: '25px'}}
+                            variant='contained'
+                            color='primary'
+                            onClick={evaluate}
+                           >
+                            Submit Answer
+                            </Button></MuiThemeProvider></center>
+                    </Paper>
+                    </Paper>
+                </Grid>
 
         </Grid>
     )
@@ -442,8 +507,6 @@ const commentRef=useRef()
 const Interactive = forwardRef((props, ref) => {
 
     const interactiveRef = useRef()
-
-    //console.log(props.data)
 
 
     useImperativeHandle(ref, () => ({
@@ -507,6 +570,13 @@ const Interactive = forwardRef((props, ref) => {
         //console.log(props.data)
         return (
             <Venn containerId='question' ref={interactiveRef} editor={false} data={props.data.data}/>
+        )
+    }
+    else if(props.data.type==='dragAndDrop-2') {
+
+        //console.log(props.data)
+        return (
+            <DragAndDrop containerId='question' ref={interactiveRef} data={props.data.questionnaire}/>
         )
     }
     else

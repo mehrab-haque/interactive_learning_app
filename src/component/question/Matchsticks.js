@@ -397,7 +397,7 @@ const MatchStciks=forwardRef((props,ref1)=>{
             <Grid
                   justify="center"
                   container>
-                <Grid item xs={11} md={5}>
+                <Grid item xs={11}>
                     <Paper style={{padding:'10px'}}>
                         <div  ref={containerRef} id={props.containerId}/>
                     </Paper>

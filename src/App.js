@@ -24,15 +24,24 @@ import {useSelector,useDispatch} from 'react-redux'
 import Home from './component/Home'
 
 
+
+
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
-  }
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+  },
+    myTheme:{
+        colorPrimary: {
+            color: "green",
+        }
+    }
 }));
 
 function App() {
+
+
 
   const isAuth=useSelector(state=>state.isLogged)
   const dispatch=useDispatch()
@@ -124,7 +133,7 @@ function App() {
 
   if(isAuth==1)
     return(
-      <Home/>
+      <Home className={classes.myTheme}/>
     )
   else
     return(

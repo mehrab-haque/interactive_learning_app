@@ -3,12 +3,21 @@ import Cookies from 'universal-cookie';
 import {base_url} from '../'
 const cookies = new Cookies();
 
-export const fetchTopics=(dispatcher)=>{
-  axios.get(base_url+'topics/en',{headers:{authorization:cookies.get('token')}}).then(res=>{
+/*
+axios.get(base_url+'api/level/topics?level_id='+level,{headers:{authorization:cookies.get('token')}}).then(res=>{
     dispatcher(topicsDispatch(res.data))
-    //console.log(res.data)
+    console.log(res.data)
   }).catch(err=>{
-    //console.log(err)
+*/
+
+
+export const fetchTopics=(dispatcher,lang,level)=>{
+  dispatcher(topicsDispatch(null))
+  axios.get(base_url+'api/level/topics?level_id='+(parseInt(level)+5),{headers:{authorization:cookies.get('token')}}).then(res=>{
+    dispatcher(topicsDispatch(res.data.topicList))
+
+  }).catch(err=>{
+    console.log(err)
   })
 }
 
@@ -78,6 +87,31 @@ export const submitFeedback=feedback=>{
   return axios.post(base_url+'/feedback/submitFeedback/',feedback,
       {headers:{authorization:cookies.get('token')}}
   ).then(res=>{
+    //console.log(res.data)
+  }).catch(err=>{
+    //console.log(err)
+  })
+}
+
+export const fetchErroredProblems=(dispatch,req)=>{
+  return axios.post(base_url+'/api/problem/submission/stats?status=error',req,
+      {headers:{authorization:cookies.get('token')}}
+  ).then(res=>{
+    dispatch(erroredProblemsDispatch(res.data))
+    //console.log(res.data)
+  }).catch(err=>{
+    //console.log(err)
+  })
+}
+
+export const setErroredProblems=(dispatch,data)=>{
+  dispatch(erroredProblemsDispatch(data))
+}
+
+export const submitSolution=submission=>{
+  return axios.post(base_url+'/submission/submitSolution/',submission,
+      {headers:{authorization:cookies.get('token')}}
+  ).then(res=>{
     console.log(res.data)
   }).catch(err=>{
     //console.log(err)
@@ -87,6 +121,13 @@ export const submitFeedback=feedback=>{
 const problemDispatch=data=>{
   return{
     type:'UPDATE_PROBLEM',
+    data:data
+  }
+}
+
+const erroredProblemsDispatch=data=>{
+  return{
+    type:'UPDATE_ERRORED_PROBLEMS',
     data:data
   }
 }

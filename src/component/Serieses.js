@@ -77,6 +77,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Serieses=props=>{
   const topicID=props.match.params.id
+  const lang=props.match.params.lang;
+  const level=props.match.params.level;
   const classes = useStyles();
   const serieses=useSelector(state=>state.serieses)
   const dispatch=useDispatch()
@@ -97,19 +99,19 @@ const Serieses=props=>{
   }
 
   return(
-    <Grid item xs={12} md={9}>
+    <Grid item xs={12}>
       {
         serieses==null?(
           <LinearProgress />
         ):(
           <div>
             <Breadcrumbs style={{marginLeft:'16px',marginBottom:'12px'}} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-              <Link color="inherit" to="/" >
+              <Link color="inherit" to={'/lang/'+lang+"/level/"+level+'/'} >
                 <font style={{color:'#888888'}}>
                 Topics
                 </font>
               </Link>
-              <Link color="inherit" to={'/topic/'+topicID+'/'}>
+              <Link color="inherit" to={'/lang/'+lang+"/level/"+level+'/topic/'+topicID+'/'}>
                 <font style={{color:'#888888'}}>
                 {serieses[0].topic_name}
                 </font>
@@ -120,15 +122,12 @@ const Serieses=props=>{
               {
                 serieses.map((series,ind)=>{
                   return(
-                    <Grid style={{minHeight:'100%'}} item xs={6} md={3}>
-                      <Link color="inherit" to={'/series/'+series.series_id+'/1'}>
+                    <Grid style={{minHeight:'100%'}} item xs={6} md={2}>
+                      <Link color="inherit" to={'/lang/'+lang+"/level/"+level+'/series/'+series.series_id+'/problem/'+'1'}>
                         <Card style={{height:'100%'}} className={classes.root1}>
                           <CardActionArea>
-                            <CardMedia
-                              className={classes.media}
-                              image={series.logo}
-                              title="Contemplative Reptile"
-                            />
+                            <img src={series.logo} style={{width:'100%',padding:'20%',marginBottom:'-20%'}}/>
+
                             <CardContent>
                               <Typography gutterBottom variant="h5" component="h2">
                                 {series.name}
@@ -146,14 +145,14 @@ const Serieses=props=>{
                                 percentage="40"
                                 rectPadding="0px"
                                 fontSize="0em"
-                                trackPathColor="#D5D5D5"
+                                trackPathColor="#f0f0f0"
                                 bgColor="transparent"
                                 trackBorderColor="transparent"
                                 defColor={{
-                                  fair: '#0090ff',
-                                  good: '#0090ff',
-                                  excellent: '#0090ff',
-                                  poor: '#0090ff',
+                                  fair: '#0090ff88',
+                                  good: '#0090ff88',
+                                  excellent: '#0090ff88',
+                                  poor: '#0090ff88',
                                 }}
                               /></div>
 

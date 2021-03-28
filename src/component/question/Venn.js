@@ -30,6 +30,8 @@ const Venn=forwardRef((props,ref1)=>{
     useEffect(()=>{
         loadUI()
         window.addEventListener('resize',loadUI);
+        console.log('vennnnnn')
+        console.log(props.data)
     },[])
 
 
@@ -158,7 +160,7 @@ const Venn=forwardRef((props,ref1)=>{
         <Grid
             justify="center"
             container>
-            <Grid item xs={11} md={5}>
+            <Grid item xs={11}>
                 <Paper style={{padding:'10px'}}>
                     <div id={props.containerId} ref={containerRef}>
                     </div>

@@ -13,6 +13,30 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {Grid} from "@material-ui/core";
 import uuid from 'react-uuid'
+import FaceIcon from "@material-ui/icons/Face";
+import Chip from "@material-ui/core/Chip";
+import ShareIcon from '@material-ui/icons/Share';
+import ParticlesBg from "particles-bg";
+
+
+import {createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+
+const myTheme = createMuiTheme({
+    palette: {
+        text: {
+            default: '#fff',
+        },
+        textColor: '#fff',
+        primary: {
+            main: '#55b5ff',
+            contrastText: "#fff"
+        }
+    },
+    stepper: {
+        iconColor: 'green',
+        textColor: 'white'// or logic to change color
+    }
+})
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +49,8 @@ const ProblemContainer=props=>{
 
     const classes = useStyles();
 
+    const lang=props.match.params.lang;
+    const level=props.match.params.level;
     const seriesId=props.match.params.series_id;
     const serial=props.match.params.serial;
     const problem=useSelector(state=>state.problem)
@@ -40,7 +66,7 @@ const ProblemContainer=props=>{
     }
 
     const goto=sl=>{
-        props.history.push('/series/'+seriesId+'/'+sl+'/')
+        props.history.push('/lang/'+lang+"/level/"+level+'/series/'+seriesId+'/problem/'+sl+'/')
         //window.location.reload()
     }
 
@@ -50,18 +76,20 @@ const ProblemContainer=props=>{
     }
 
     return(
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12}>
+
+            <ParticlesBg  type="cobweb" color={'#0090ff'}  num={100} bg={true}/>
             {
                 problem!=null?(
                     <Grid container>
                         <Grid item xs={12}>
                             <Breadcrumbs style={{marginLeft:'16px',marginBottom:'12px'}} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                                <Link color="inherit" to="/" >
+                                <Link color="inherit" to={'/lang/'+lang+"/level/"+level+'/'} >
                                     <font style={{color:'#888888'}}>
                                         Topics
                                     </font>
                                 </Link>
-                                <Link color="inherit" to={'/topic/'+problem.topic_id+'/'}>
+                                <Link color="inherit" to={'/lang/'+lang+"/level/"+level+'/topic/'+problem.topic_id+'/'}>
                                     <font style={{color:'#888888'}}>
                                     {problem.topic_name}
                                     </font>
@@ -72,23 +100,33 @@ const ProblemContainer=props=>{
                                     </font>
                                 </Link>
 
+                                <Chip
+                                    style={{marginTop:'5px',marginLeft:'5px',background:'#0090ffaa',color:'#ffffff'}}
+                                    icon={<ShareIcon/>}
+                                    label="Recommend"
+                                    color="primary"
+                                    />
+
                             </Breadcrumbs>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid xs={0} md={3}/>
+                        <Grid item xs={12} md={6}>
+                            <MuiThemeProvider theme={myTheme}>
+
                             <Stepper style={{marginTop:'12px',marginBottom:'-12px',padding:'10px'}} activeStep={serial-1} alternativeLabel>
                                 {
                                     Array(problem.nproblem).fill().map((_, i) =>{
                                         return(
                                             <Step key={uuid()} style={{cursor:'pointer'}} onClick={()=>{if(serial!=i+1)goto(i+1)}}>
                                                 <StepLabel>
+
                                                 </StepLabel>
                                             </Step>
                                         )
                                     })
                                 }
                             </Stepper>
-                        </Grid>
-                        <Grid item xs={12}>
+                            </MuiThemeProvider>
                             <Problem next={nextProblem} data={problem}/>
                         </Grid>
                     </Grid>

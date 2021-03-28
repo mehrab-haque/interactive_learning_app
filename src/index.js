@@ -15,6 +15,7 @@ import { TouchBackend } from 'react-dnd-touch-backend'
 import { usePreview } from 'react-dnd-preview';
 
 
+
 export const base_url='https://0jymup9y4j.execute-api.ap-south-1.amazonaws.com/d/'
 
 
@@ -40,9 +41,9 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
           <DndProvider backend={TouchBackend} options={{enableMouseEvents:true}}>
-            <App />
-              <MyPreview />
 
+              <App />
+            <MyPreview />
           </DndProvider>
       </BrowserRouter>
     </Provider>

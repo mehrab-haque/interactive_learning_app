@@ -24,14 +24,21 @@ import Topics from './Topics'
 import Serieses from './Serieses'
 import ProblemContainer from './ProblemContainer'
 import { createBrowserHistory } from "history";
+import { useHistory } from "react-router-dom";
+
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
+import {fetchErroredProblems} from "../action/content";
+import ErrorList from "./ErrorList";
+import Chip from "@material-ui/core/Chip";
+import FaceIcon from "@material-ui/icons/Face";
 
 
-const history = createBrowserHistory();
-const drawerWidth = 200;
+
+
+const drawerWidth = 260;
 
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +108,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Home=props=>{
 
+  const history=useHistory()
+
   const profile=useSelector(state=>state.profile)
+
   const dispatch=useDispatch()
 
   const logoutClick=event=>{
@@ -119,52 +129,38 @@ const Home=props=>{
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+
+  const goTo=(seriesId,problemSerial)=>{
+    history.push(`/series/${seriesId}/${problemSerial}/`)
+  }
+
   const drawer = (
-    <div>
+    <div style={{padding:'10px'}}>
 
-
-      {profile==null?(
-        <LinearProgress />
-      ):(<div>
-        <div style={{marginBottom:'-40px'}} className={classes.toolbar} />
-          <center>
-            <Avatar className={classes.orange} src={profile.image} style={{marginBottom:'20px',marginTop:'-20px',height:'80px',width:'80px'}} >{'name' in profile ? profile.name.substr(0,1):'N'}</Avatar>
-            <Typography variant="h6" noWrap>
-              <font style={{color:'#666666'}}>
-              {profile.name}
-              </font>
-            </Typography>
-
-            <Divider style={{marginTop:'20px'}}/>
-
-            <img style={{width:'100%'}} src={require('../assets/icons/graph1.png')}/>
-            <img style={{width:'100%'}} src={require('../assets/icons/graph2.png')}/>
-
-            <Divider style={{marginTop:'20px'}}/>
-            <Button onClick={logoutClick} style={{marginTop:'20px'}} variant="outlined" color="primary" >
-              Logout
-            </Button>
-
-
-          </center>
-
-
-        </div>
-      )}
-
+          <ErrorList history={history}  style={{marginRight:'20px'}}/>
 
     </div>
   );
 
   useEffect(() => {
-      getProfile()
+    getProfile()
   }, []);
+
+
+  useEffect(()=>{
+    if(profile!==null)
+      fetchErroredProblems(dispatch,{
+        user_id:profile.user_id
+      })
+      //console.log(profile)
+  },[profile])
 
   const getProfile=()=>{
     fetchProfile(dispatch)
   }
 
   return(
+      <BrowserRouter key={2222} history={history}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar style={{backgroundColor:'#ffffff',color:'#0090ff',boxShadow:'none'}} position="fixed" className={classes.appBar}>
@@ -181,14 +177,29 @@ const Home=props=>{
 
           <img src={require('../assets/icons/logo.png')} style={{height:'36px'}}/>
           <Typography variant="h6" noWrap>
-            Interactive Problems
+            Interact
           </Typography>
+          {
+            profile!==null?(
+                <div  style={{position:'absolute',right:'20px',display:'flex'}}>
+
+                  <Avatar onClick={logoutClick} src={profile.image}>
+                    A
+                  </Avatar>
+                </div>
+
+            ):(
+                <div/>
+            )
+          }
+
         </Toolbar>
         <Divider/>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
+          <Route>
           <Drawer
             container={container}
             variant="temporary"
@@ -204,6 +215,7 @@ const Home=props=>{
           >
             {drawer}
           </Drawer>
+          </Route>
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer
@@ -221,41 +233,37 @@ const Home=props=>{
         <div className={classes.toolbar} />
         {
           profile!=null?(
-            <Grid container spacing={1}>
-              <BrowserRouter history={history}>
-                <Switch>
-                  <Route path="/" exact component={Topics}/>
-                  <Route path="/topic/:id" component={Serieses}/>}/>
-                  <Route path="/series/:series_id/:serial" component={ProblemContainer}/>}/>
-                </Switch>
-              </BrowserRouter>
-              <Grid item xs={12} md={3}>
-                <Card className={classes.root}>
-                  <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        image={require('../assets/icons/pr.png')}
-                        title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
 
-                        <div>Start your journey</div>
+              <Grid container spacing={1}>
+                  <Route path = "/" exact component={Redirect}/>
+                  <Route path="/lang/:lang/level/:level" exact  component={Topics}/>
+                  <Route path="/lang/:lang/level/:level/topic/:id" exact component={Serieses}/>
+                  <Route path="/lang/:lang/level/:level/series/:series_id/problem/:serial" exact component={ProblemContainer}/>
 
-                      </Typography>
 
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
               </Grid>
-            </Grid>
+
           ):(
             <div/>
           )
         }
       </main>
     </div>
+      </BrowserRouter>
   )
 }
+
+const Redirect=props=>{
+
+  useEffect(()=>{
+    props.history.push('/lang/en/level/3/')
+  },[])
+
+  return(
+      <div/>
+  )
+}
+
+
 
 export default Home;

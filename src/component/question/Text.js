@@ -27,7 +27,6 @@ const Text=forwardRef((props,ref)=>{
         inputRef={textRef}
         variant='outlined'
         label='Your Answer'
-        fullWidth
         />
     </div>
   )

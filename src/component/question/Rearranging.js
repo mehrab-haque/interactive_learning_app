@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import Card from "./rearranging/Card";
 
 const style = {
-    width: 200,
+    display:'flex'
 };
 
 
