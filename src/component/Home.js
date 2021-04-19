@@ -160,7 +160,7 @@ const Home=props=>{
   }
 
   return(
-      <BrowserRouter key={2222} history={history}>
+      <BrowserRouter history={history}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar style={{backgroundColor:'#ffffff',color:'#0090ff',boxShadow:'none'}} position="fixed" className={classes.appBar}>

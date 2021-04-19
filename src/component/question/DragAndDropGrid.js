@@ -1,12 +1,12 @@
 import React,{useState,createRef,useRef,useCallback,useEffect,forwardRef, useImperativeHandle} from 'react'
 import { NativeTypes } from 'react-dnd-html5-backend';
-import { Dustbin } from './grouping/Dustbin';
-import { Box } from './grouping/Box';
+import { Dustbin } from './dndgrid/Dustbin';
+import { Box } from './dndgrid/Box';
 import update from 'immutability-helper';
 
 
 
-const Grouping=forwardRef((props,ref1)=>{
+const DragAndDropGrid=forwardRef((props,ref1)=>{
 
     useImperativeHandle(ref1, () => ({
 
@@ -82,17 +82,36 @@ const Grouping=forwardRef((props,ref1)=>{
 
     return (
         <div>
-        <div style={{ overflow: 'hidden', clear: 'both' }}>
-            {dustbins.map(({ accepts, items,name }, index) => (<Dustbin accept={accepts} name={name} items={dustbins[index].items} onDrop={(item) => handleDrop(index, item)} key={index}/>))}
-        </div>
+            <div style={{ overflow: 'hidden', clear: 'both' }}>
+                <table>
+                    {
+                        Array(props.data.nRows).fill().map((_,i)=>{
+                            return(
+                                <tr>
+                                    {
+                                        Array(props.data.nCols).fill().map((_,j)=>{
+                                            return(
+                                                <td>
+                                                    <Dustbin accept={props.data.active[i*props.data.nRows+j]?props.data.items:[]} name={dustbins[i*props.data.nRows+j].name} items={dustbins[i*props.data.nRows+j].items} onDrop={(item) => handleDrop(i*props.data.nRows+j, item)} key={i*props.data.nRows+j}/>
+                                                </td>
+                                            )
+                                        })
+                                    }
+                                </tr>
+                            )
+                        })
+                    }
 
-        <div style={{ overflow: 'hidden', clear: 'both' }}>
-            {boxes.map(({ name, type }, index) => (<Box name={name} type={type} isDropped={isDropped(name)} key={index}/>))}
+                </table>
+            </div>
+
+            <div style={{ overflow: 'hidden', clear: 'both' }}>
+                {boxes.map(({ name, type }, index) => (<Box name={name} type={type} isDropped={isDropped(name)} key={index}/>))}
+            </div>
         </div>
-    </div>
     );
 })
 
-export default Grouping
+export default DragAndDropGrid
 
 

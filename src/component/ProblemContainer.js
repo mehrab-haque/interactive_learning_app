@@ -58,6 +58,7 @@ const ProblemContainer=props=>{
 
     useEffect(()=>{
         getProblems()
+        console.log(window.innerWidth*window.innerHeight)
     },[seriesId,serial])
 
 
@@ -78,7 +79,7 @@ const ProblemContainer=props=>{
     return(
         <Grid item xs={12}>
 
-            <ParticlesBg  type="cobweb" color={'#0090ff'}  num={100} bg={true}/>
+            <ParticlesBg  type="cobweb" color={'#0090ff'}  num={window.innerWidth*window.innerHeight*40.0/825497.0} bg={true}/>
             {
                 problem!=null?(
                     <Grid container>

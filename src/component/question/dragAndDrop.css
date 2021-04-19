@@ -1,5 +1,5 @@
 .dragAndDropContainer{
-    border: dashed;
-    border-color: #888888;
-    border-width: 0.5px;
+    border: 1px solid #0090ff;
+    box-shadow:5px 5px 5px 5px #0090ff44;
+    border-radius: 16px;
 }

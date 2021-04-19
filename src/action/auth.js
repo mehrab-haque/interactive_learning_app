@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import {base_url} from '../'
 const cookies = new Cookies();
 
-const COOKIE_AGE=31536000
+const COOKIE_AGE=315360000
 
 export const checkAuth=(dispatcher)=>{
   console.log(cookies.get('token'))

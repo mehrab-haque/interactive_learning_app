@@ -39,6 +39,9 @@ import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
 import {TextFields} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import DragAndDrop from "./question/DragAndDrop";
+import {isMobile} from 'react-device-detect';
+import DragAndDropGrid from "./question/DragAndDropGrid";
+
 
 const myTheme = createMuiTheme({
     palette: {
@@ -139,6 +142,8 @@ const Problem = props => {
     const dispatch=useDispatch()
 
     //console.log(props.data.data.statement.split('![]'))
+
+    console.log('hiiiiii')
 
     const profile=useSelector(state=>state.profile)
 
@@ -508,7 +513,6 @@ const Interactive = forwardRef((props, ref) => {
 
     const interactiveRef = useRef()
 
-
     useImperativeHandle(ref, () => ({
         isValid() {
             return interactiveRef.current.isValid()
@@ -575,8 +579,44 @@ const Interactive = forwardRef((props, ref) => {
     else if(props.data.type==='dragAndDrop-2') {
 
         //console.log(props.data)
+        if(isMobile){
+            return (
+                <div style={{width:'100%'}}>
+                    <DragAndDrop containerId='question' ref={interactiveRef} data={props.data.questionnaire}/>
+
+                </div>
+            )
+        }else
+            return(
+                <center>
+                <div style={{width:'50%'}}>
+                    <DragAndDrop containerId='question' ref={interactiveRef} data={props.data.questionnaire}/>
+
+                </div>
+                </center>
+            )
+
+    }
+    else if(props.data.type==='dragAndDrop-3-Grid') {
+        var containers=[],schema=[]
+        props.data.data.containers.map(container=>{
+            containers.push(container.label)
+            schema.push([])
+        })
+        console.log(props.data)
+        var tmpData={
+            containers:containers,
+            items:props.data.data.unselected,
+            schema:schema,
+            answer:props.data.data.data.answer,
+            active:props.data.data.active,
+            nRows:props.data.data.nRows,
+            nCols:props.data.data.nCols
+        }
+        //console.log('hi')
+        //console.log(tmpData)
         return (
-            <DragAndDrop containerId='question' ref={interactiveRef} data={props.data.questionnaire}/>
+            <DragAndDropGrid ref={interactiveRef} data={tmpData}/>
         )
     }
     else
