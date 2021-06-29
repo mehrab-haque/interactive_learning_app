@@ -13,16 +13,17 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 10px;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: 0px;
   background:#0090ff88;
 }
 

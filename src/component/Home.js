@@ -38,7 +38,7 @@ import FaceIcon from "@material-ui/icons/Face";
 
 
 
-const drawerWidth = 260;
+const drawerWidth = 400
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+      marginLeft: '0px',
     },
   },
   menuButton: {
@@ -135,7 +135,7 @@ const Home=props=>{
   }
 
   const drawer = (
-    <div style={{padding:'10px'}}>
+    <div style={{backgroundColor:'#F2F6FD',padding:'24px'}}>
 
           <ErrorList history={history}  style={{marginRight:'20px'}}/>
 
@@ -179,6 +179,7 @@ const Home=props=>{
           <Typography variant="h6" noWrap>
             Interact
           </Typography>
+
           {
             profile!==null?(
                 <div  style={{position:'absolute',right:'20px',display:'flex'}}>

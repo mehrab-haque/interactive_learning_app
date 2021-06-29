@@ -27,6 +27,7 @@ import Rearranging from './question/Rearranging'
 import Matchsticks from './question/Matchsticks'
 import Venn from './question/Venn'
 import Answer from "./Answer";
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
@@ -134,6 +135,17 @@ const timeConverter = UNIX_timestamp => {
     var time = date + '-' + month + '-' + year + ' at ' + hour + ':' + min + ':' + sec;
     return time;
 }
+
+const classNames=[
+    'ten',
+    'twenty',
+    'thirty',
+    'fourty',
+    'fifty',
+    'sixty',
+    'seventy',
+    'eighty'
+]
 
 const Problem = props => {
 
@@ -254,7 +266,7 @@ const commentRef=useRef()
                 erroredProblems.push(props.data)
         }
 
-        feedbackCheck()
+        //feedbackCheck()
     }
 
 
@@ -483,28 +495,67 @@ const commentRef=useRef()
                         titleTypographyProps={{variant: 'h6'}}
                         subheader={'Level :' + props.data.grade }
                     />
-                    <MDEditor.Markdown className='md' source={props.data.data.description}/>
+                    {
+                        true?(
+                            <div>
+                                <MDEditor.Markdown className={classNames[parseInt(props.data.data.width/10)-1]} source={props.data.data.description}/>
+                                <MDEditor.Markdown  className={classNames[parseInt(props.data.data.width/10)-1]} source={props.data.data.statement}/>
+                                <Paper style={{padding: '15px'}}>
+                                    <Interactive ref={interactiveRef} data={props.data.data}/>
+                                    <Question ref={questionRef} data={props.data.data}/>
+                                    <center>
+                                        <MuiThemeProvider theme={myTheme}><Button
+                                            style={{marginTop: '25px'}}
+                                            variant='contained'
+                                            color='primary'
+                                            onClick={evaluate}
+                                        >
+                                            Submit
+                                        </Button></MuiThemeProvider>
+                                       <Button
+                                            style={{marginTop: '25px',marginLeft:'10px'}}
+                                            variant='outlined'
+                                            color='primary'
+                                            onClick={()=>{setFeedbackdialog(true)}}
+                                        >
+                                           Feedback
+                                        </Button>
+                                    </center>
+                                </Paper>
+                            </div>
+                        ):(
+                            <div>
+
+                                <div style={{fontSize:'1.5em'}}>
+                                    Download our Android App to access this problem and many other amazing features including:
+                                    <ul>
+                                        <li>
+                                            Curiosity boosting user experience
+                                        </li>
+                                        <li>
+                                            More interactive interfaces
+                                        </li>
+                                        <li>
+                                            Offline capabilities
+                                        </li>
+                                        <li>
+                                            Unlock ahievements
+                                        </li>
+                                    </ul>
+                                    <Button
+                                        startIcon={<PhoneAndroidIcon/>}
+                                        variant={'contained'}
+                                        color={'primary'}
+                                        >
+                                        Download Now
+                                    </Button>
+                                </div>
+                            </div>
+                        )
+                    }
+
                 </Paper>
             </Grid>
-                <Grid item xs={12} md={12}>
-                    <Paper style={{padding: '15px'}}>
-                    <MDEditor.Markdown className='md' source={props.data.data.statement}/>
-                    <Paper style={{padding: '15px'}}>
-                        <Interactive ref={interactiveRef} data={props.data.data}/>
-                        <Question ref={questionRef} data={props.data.data}/>
-                        <center>
-                            <MuiThemeProvider theme={myTheme}><Button
-                            style={{marginTop: '25px'}}
-                            variant='contained'
-                            color='primary'
-                            onClick={evaluate}
-                           >
-                            Submit Answer
-                            </Button></MuiThemeProvider></center>
-                    </Paper>
-                    </Paper>
-                </Grid>
-
         </Grid>
     )
 }

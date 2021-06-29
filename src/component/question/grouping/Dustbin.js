@@ -18,14 +18,6 @@ const style = {
 
 };
 
-const itemStyle = {
-    border: '1px dashed gray',
-    backgroundColor: 'white',
-    padding: '0.5rem 1rem',
-    marginRight: '10px',
-    marginBottom: '10px',
-
-};
 
 export const Dustbin = ({ accept, items, onDrop,name,propagate }) => {
 

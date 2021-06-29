@@ -128,7 +128,7 @@ const ProblemContainer=props=>{
                                 }
                             </Stepper>
                             </MuiThemeProvider>
-                            <Problem next={nextProblem} data={problem}/>
+                            <Problem serial={serial} next={nextProblem} data={problem}/>
                         </Grid>
                     </Grid>
                 ):(

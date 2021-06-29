@@ -1,8 +1,4 @@
-.md img{
-    width: 50%;
-    margin-left: 25%;
-    display: block;
-}
+
 
 .blur{
     -webkit-filter: blur(4px);
@@ -12,10 +8,44 @@
     filter: blur(4px);
 }
 
-@media only screen and (min-width: 600px) {
-    .md img{
-        width: 50%;
-        margin-left: 25%;
-        display: block;
-    }
+.ten img{
+    width:10%;
+    margin-left: 45%;
 }
+
+.twenty img{
+    width:20%;
+    margin-left: 40%;
+}
+
+.thirty img{
+    width:30%;
+    margin-left: 35%;
+}
+
+.fourty img{
+    width:40%;
+    margin-left: 30%;
+}
+
+.fifty img{
+    width:50%;
+    margin-left: 25%;
+}
+
+.sixty img{
+    width:60%;
+    margin-left: 20%;
+}
+
+.seventy img{
+    width:70%;
+    margin-left: 15%;
+}
+
+.eighty img{
+    width:80%;
+    margin-left: 10%;
+}
+
+
